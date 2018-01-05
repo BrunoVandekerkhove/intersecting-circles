@@ -8,7 +8,3 @@ Speed is respectively of the order of `O(N²)`, `O((N+K)*log(N))` (worst-case `O
 The brute force algorithm compares each circle with each other circle.
 The sweep line algorithm deals with an imaginary sweep line hovering over all circles. It preprocesses the circles by sorting them on the basis of x-coordinate, then hovers the sweep line, activating (and deactivating) circles that are being hovered. This limits the number of comparisons for each (*active*) circle to those circles that are *active* at the same *time* (that is, x-coordinate).
 The Bentley Ottman algorithm applies the same reasoning, but makes use of specialised data structures for ensuring logarithmic time complexity of the fundamental operations.
-
-## License
-
-You can do as you please with the code.
