@@ -1,5 +1,3 @@
-# IntersectingCircles
-
 A Java app to detect intersections in a collection of circles. It makes use of three different algorithms (brute force, simple sweep line algorithm and Bentley-Ottmann algorithm) to fetch all intersections. 
 Speed is respectively of the order of `O(N²)`, `O((N+K)*log(N))` (worst-case `O(N²)`) and `O((N+K)*log(N))`.
 
