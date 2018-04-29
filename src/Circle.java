@@ -23,7 +23,7 @@ public class Circle {
 	 * @throws	IllegalArgumentException
 	 * 			The given radius is negative.
 	 * @throws  IllegalArgumentException
-	 * 			The x - and y coordinate of the given center point are distanced at less than radius 
+	 * 			The x - and y coordinate of the given center point are at at less than radius
 	 * 			 away from either Double.MAX_VALUE or -Double.MAX_VALUE.
 	 * 			| Double.MAX_VALUE - Math.abs(center.getX()) < radius
 	 * 			| || Double.MAX_VALUE - Math.abs(center.getY()) < radius
@@ -62,6 +62,26 @@ public class Circle {
 	private final double radius;
 	
 	/**
+	 * Returns the minimum x coordinate of this circle.
+	 * 
+	 * @return  The leftmost x coordinate of this circle.
+	 * 			| this.getCenter().getX() - this.getRadius()
+	 */
+	public double getMinimumX() {
+		return this.getCenter().getX() - this.getRadius();
+	}
+	
+	/**
+	 * Returns the maximum x coordinate of this circle.
+	 * 
+	 * @return  The rightmost x coordinate of this circle.
+	 * 			| this.getCenter().getX() + this.getRadius()
+	 */
+	public double getMaximumX() {
+		return this.getCenter().getX() + this.getRadius();
+	}
+	
+	/**
 	 * Checks whether the given circle and this circle overlap.
 	 * 
 	 * @param  	other
@@ -69,7 +89,7 @@ public class Circle {
 	 * @return 	True if and only if the distance between this - and the other circle's center point is smaller than
 	 * 			or equal to the sum of their radiuses.
 	 *       	| result == (this.getCenter().distanceTo(other.getCenter()) <= (this.getRadius() + other.getRadius()))
-	 * @note	This method does *not* check for intersection, as one circle inside an other
+	 * @note	This method does *not* check for intersections, as one circle inside an other
 	 * 			 is not an intersection while it is an overlap.
 	 */
 	public boolean overlaps(Circle other) {
@@ -99,16 +119,29 @@ public class Circle {
 	 * 			The circle intersecting this circle.
 	 * @post	The given stack contains the intersections of the given circle with this circle.
 	 */
-	public void addIntersections(Circle other, Stack<Object> intersections) {
+	public void addIntersections(Circle other, Stack<Point> intersections) {
 		
-		double distance = (this.getCenter().distanceTo(other.getCenter()));
-		if (distance <= (this.getRadius() + other.getRadius())
-			&& distance >= Math.abs(this.getRadius() - other.getRadius())) {
+		Point c1 = this.getCenter(), c2 = other.getCenter(); // Center points
+		double r1 = this.getRadius(), r2 = other.getRadius(); // Radii
+		double distance = (c1.distanceTo(c2)); // Distance between center points
+		
+		if (distance <= (r1 + r2) && distance >= Math.abs(r1 - r2)) {
 			
-			double a = (Math.pow(this.getRadius(), 2) - Math.pow(other.getRadius(), 2) + Math.pow(distance, 2)) / (2 * distance);
-			double h = Math.sqrt(Math.pow(this.getRadius(), 2) - Math.pow(a, 2));
+			if (distance == 0)
+				return; // The circles are equal
 			
+			double d1 = (Math.pow(r1, 2) - Math.pow(r2, 2) + Math.pow(distance, 2)) / (2 * distance);
+			double z = Math.sqrt(Math.pow(r1, 2) - Math.pow(d1, 2));
 			
+			double xp = c1.getX() + d1 * (c2.getX() - c1.getX()) / distance;
+			double yp = c1.getY() + d1 * (c2.getY() - c1.getY()) / distance;
+				
+			intersections.push(new Point(	xp + z * (c2.getY() - c1.getY()) / distance,
+											yp - z * (c2.getX() - c1.getX()) / distance));
+			
+			if (distance != r1 + r2 && distance != Math.abs(r1 - r2)) // The circles intersect in only one point
+				intersections.push(new Point(	xp - z * (c2.getY() - c1.getY()) / distance,
+												yp + z * (c2.getX() - c1.getX()) / distance));
 			
 		}
 		
@@ -120,8 +153,8 @@ public class Circle {
 	 * 
 	 * @param 	N
 	 * 			The amount of circles to create.
-	 * @return	An array of N circles with center point having x - and y coordinates between 0.0 and 1.0,
-	 * 			and random radiuses smaller than or equal to 1.0.
+	 * @return	An array of N circles with center point having x - and y coordinates, and radiuses greater than
+	 * 				or equal to 0.0 and smaller than 1.0.
 	 */
 	public static Circle[] randomCircles(int N) {
 		Circle[] circles = new Circle[N];
@@ -196,14 +229,17 @@ public class Circle {
 	
 	/**
 	 * Returns the smallest double in the given array of doubles.
+	 * 	This is a helper method.
 	 * 
 	 * @param 	array
 	 * 			An array of doubles.
 	 * @return	The minimum value in the given array, or zero if the array is empty.
 	 */
 	private static double minimum(double[] array) {
-		double minimum = 0.0;
-		for (int i=0 ; i<array.length ; i++)
+		if (array.length == 0)
+			return 0.0;
+		double minimum = array[0];
+		for (int i=1 ; i<array.length ; i++)
 			minimum = Math.min(minimum, array[i]);
 		return minimum;
 	}

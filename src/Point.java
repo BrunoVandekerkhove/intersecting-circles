@@ -53,7 +53,7 @@ public class Point {
 	 * Calculates the Euclidian distance between this point and the given one.
 	 * 
 	 * @param 	other
-	 * 			The point to calculate the distance from.
+	 * 			The point to calculate the distance to.
 	 * @return	The Euclidian distance between this - and the given point.
 	 * 			| return (Math.max(Math.abs(this.getX() - other.getX()), Math.abs(this.getY() - other.getY())) == 0 ? 0 :
 	 * 			|	Math.max(Math.abs(this.getX() - other.getX()), Math.abs(this.getY() - other.getY()))
@@ -65,7 +65,6 @@ public class Point {
 	 * @note	The distance is not calculated using the classical sqrt(dx^2+dy^2) equation as to prevent overflow.
 	 */
 	public double distanceTo(Point other) {
-		double x1 = this.getX(), x2 = other.getX(), y1 = this.getY(), y2 = other.getY();
 		double dx = Math.abs(this.getX() - other.getX()), dy = Math.abs(this.getY() - other.getY());
 		double min = Math.min(dx, dy), max = Math.max(dx, dy);
 		if (max == 0)

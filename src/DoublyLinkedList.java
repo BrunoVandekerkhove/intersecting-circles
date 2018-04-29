@@ -119,12 +119,11 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
 		}
 		
 		/**
-		 * Returns the next element in the iterator.
-		 * 
-		 * @throws	NoSuchElementException
-		 * 			There is no next element.
+		 * Returns the next element in the iterator, or null if there is none.
 		 */
 		public Item next() {
+			if (!hasNext())
+				return null;
             lastAccessed = current;
             Item item = current.item;
             current = current.next; 
@@ -133,7 +132,7 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
 		}
 
         /**
-         * Remove the element that was last accessed by next() or previous() from the underlying list.
+         * Remove the element that was last accessed by next() from the underlying list.
          */
         public void remove() { 
             if (lastAccessed == null) throw new IllegalStateException();

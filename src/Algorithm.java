@@ -9,7 +9,7 @@ public abstract class Algorithm {
 	/**
 	 * A variable registering the intersections of the circles in the input of this algorithm.
 	 */
-	protected Stack<Object> intersections;
+	protected Stack<Point> intersections;
 	
 	/**
 	 * An enumeration with types of algorithms implemented throughout.
@@ -39,7 +39,7 @@ public abstract class Algorithm {
 	 * 			An array of circles to determine intersections of.
 	 * @return	The intersections of the circles in the given array.
 	 */
-	public abstract Stack<Object> getIntersections(Circle[] circles) ;
+	public abstract Stack<Point> getIntersections(Circle[] circles) ;
 	
 	/**
 	 * Create and initialize a new algorithm of given type.

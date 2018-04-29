@@ -23,10 +23,11 @@ public class IntersectingCircles {
 	 */
 	public static void main(String[] args) {
 		
-		// createInputFile(1, Rectangle.randomIntegerCircles(1000, new Rectangle(0,1000,0,1000), 100), new File("/Users/Bubble/Desktop/input.txt"));
+		// Comment out the line below if creating a sample input file is desired
+		// createInputFile(1, Circle.randomIntegerCircles(1000, new Rectangle(0,1000,0,1000), 10), new File("input.txt"));
 		
 		if (args.length < 1)
-			System.out.println("Ongeldige invoer. Raadpleeg de ReadMe.");
+			System.out.println("Ongeldige invoer. Raadpleeg de ReadMe voor verdere informatie.");
 		else {
 			
 			String outputPath = "output.txt";
@@ -44,7 +45,7 @@ public class IntersectingCircles {
 			File output = new File(outputPath);
 			
 			if (input.getName().equals(output.getName()))
-				System.out.println("Ongeldige invoer. Raadpleeg de ReadMe.");
+				System.out.println("Ongeldige invoer. Raadpleeg de ReadMe voor verdere informatie.");
 			else
 				runAlgorithm(input, output);
 			
@@ -94,7 +95,7 @@ public class IntersectingCircles {
 				
 				// Start a stopwatch and run the appropriate algorithm
 				Stopwatch stopwatch = new Stopwatch();
-				Stack<Object> intersections = algorithm.getIntersections(circles);
+				Stack<Point> intersections = algorithm.getIntersections(circles);
 				double elapsedTime = stopwatch.getElapsedTime();
 				for (Object intersection : intersections) {
 					printer.println(intersection.toString());
@@ -110,21 +111,22 @@ public class IntersectingCircles {
 		} catch (FileNotFoundException exception) {
 			System.out.println("Het invoerbestand bestaat niet.");
 		} catch (InputMismatchException exception) {
-			System.out.println("Het invoerbestand heeft foutieve informatie.");
+			System.out.println("Het invoerbestand is niet goed geformateerd. Raadpleeg de ReadMe voor verdere informatie.");
 		} catch (NoSuchElementException exception) {
 			System.out.println("Het invoerbestand bevat niet voldoende informatie.");
 		} catch (IOException e) {
-			System.out.println("Het uitvoerbestand kon niet geschreven worden.");
+			System.out.println("Het uitvoerbestand kon niet opgemaakt worden.");
 		}
 		
 	}	
 	
 	/**
 	 * Fill the given text file with the given circles, formatted to match this assignment's input format.
+	 * 	This function can be used for testing purposes.
 	 * 
 	 * @param	algorithmOrdinal
 	 * 			The ordinal of the algorithm to be used when processing the input file.
-	 * @param	rectangles
+	 * @param	circles
 	 * 			An array of circles to fill the given file with.
 	 * @param 	file
 	 * 			The file to fill with circles. Its contents will be formatted appropriately.
@@ -146,7 +148,7 @@ public class IntersectingCircles {
 			printer.close();
 			
 		} catch (Exception exception) {
-			System.out.println("Het invoerbestand kon niet gecreëerd worden.");
+			System.out.println("Het invoerbestand kon niet opgesteld worden.");
 		}
 		
 	}

@@ -16,10 +16,10 @@ public class BruteForceAlgorithm extends Algorithm {
 	 * @return	The intersections of the circles in the given array.
 	 * @note	This algorithm finds intersections in O(N^2)
 	 */
-	public Stack<Object> getIntersections(Circle[] circles) {
+	public Stack<Point> getIntersections(Circle[] circles) {
 				
 		// Initialize intersections list (list of points and circles)
-		intersections = new Stack<Object>(); // A static array of adequate length would likely reduce cost, but would be less neat
+		intersections = new Stack<Point>(); // A static array of adequate length would likely reduce cost, but would be less neat
 		
 		// Loop through all circles, comparing them with every other circle
 		Circle first, second;
